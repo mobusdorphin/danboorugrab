@@ -61,9 +61,11 @@ if downloadThem == 'y' or downloadThem == 'yes':
   dlcount = 1
   for i in urlList:
     filename = re.search('data/(.+)', i).group(1)
-    if os.path.isfile(filename):
-      continue
     print '\nDownloading file %s (%s of %s)' % (filename, dlcount, len(urlList))
+    if os.path.isfile(filename):
+      print 'File Exists, skipping'
+      dlcount += 1
+      continue
     wget.download(i)
     dlcount += 1
 
