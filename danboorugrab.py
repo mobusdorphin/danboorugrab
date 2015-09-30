@@ -4,6 +4,7 @@ import requests
 import re
 import wget
 import sys
+import os
 
 outputString = ''
 urlList = []
@@ -47,6 +48,16 @@ if saveList == 'y' or saveList == 'yes':
 print 'Download them all? y/N'
 downloadThem = raw_input()
 if downloadThem == 'y' or downloadThem == 'yes':
+  failed = True
+  while failed:
+    directory = raw_input('Save in what directory?:  ')
+    try:
+      if directory == '':
+        break
+      os.chdir(directory)
+      failed = False
+    except OSError as oops:
+      print oops
   dlcount = 1
   for i in urlList:
     print '\nDownloading file %s of %s' % (dlcount, len(urlList))
