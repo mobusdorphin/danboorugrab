@@ -33,7 +33,16 @@ sourceUrl = 'http://danbooru.donmai.us/posts?tags=' + tagString
 
 while notFound:
   print "Checking page %s" % sourceUrl
-  r = requests.get(sourceUrl)
+  try: r = requests.get(sourceUrl)
+  except: 
+    print 'Request failed, retrying...'
+    try: r = requests.get(sourceUrl)
+    except: 
+      print 'Request failed, retrying...'
+      try: r = requests.get(sourceUrl)
+      except: 
+        print 'Request failed after three attempts.  Aborting'
+        exit(1)
   match = re.findall('data-file-url="(.+?)"', r.text)
   if len(match) == 0:
     notFound = False
