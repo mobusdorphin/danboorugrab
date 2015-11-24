@@ -5,7 +5,6 @@ import re
 import requests
 import sys
 import wget
-import Tkinter
 
 
 def downloadTheThings(urlList):
