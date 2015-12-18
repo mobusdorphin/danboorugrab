@@ -45,8 +45,7 @@ def downloadTheThings(urlList):
     except OSError as oops:
       print oops
 
-  ###########################
-  # Finally, download the things
+
 
   dlcount = 1
   for i in urlList:
@@ -75,7 +74,9 @@ def getTags():
   return tagString, sourceUrl
 
 ###########################
-# Keep checking pages as long as we're getting a result and tabulate each URL to a list
+# Find each instance of data-file-url= and record it's value into a list.  
+# Do it again each time we click "next" at the bottom of the page
+# If there are no pictures on the page, or there is no next button, we're done,
 def obtainUrls(tagString, sourceUrl):
   urlList = []
   urlString = ''
@@ -126,18 +127,22 @@ def lowerInput():
 urlList = []
 urlString = ''
 tagString = ''
+
+###########################
+# Build the top-level URL for us to scan
 tagString, sourceUrl = getTags()
+
+###########################
+# Obtain location of each picture
 urlList, urlString = obtainUrls(tagString, sourceUrl)
 
 ###########################
 # Confirm with user everything is kosher before writing to disk
-
 print 'Download them all? y/N'
 downloadThem = lowerInput() 
 
 ###########################
-# Have user specify a target directory 
-
+# Finally, download the things
 if downloadThem == 'y' or downloadThem == 'yes':
   downloadTheThings(urlList)
 
